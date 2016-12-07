@@ -6,9 +6,15 @@ import { createStore, combineReducers, bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
 
 // action
-const counterAction = () => {
+const incrementAction = () => {
   return {
     type: 'INCREMENT'
+  }
+}
+
+const decrementAction = () => {
+  return {
+    type: 'DECREMENT'
   }
 }
 
@@ -17,6 +23,8 @@ const counterReducer = (state = 0, action) => {
   switch(action.type) {
     case 'INCREMENT' :
       return state + 1;
+    case 'DECREMENT':
+      return state - 1; 
     default:
       return state;
   }
@@ -33,7 +41,10 @@ const store = createStore(rootReducer);
 class Btn extends React.Component {
   render(){
     return(
-      <button onClick={this.props.handleClick}> Click Me </button>
+      <div>
+        <button onClick={this.props.increment}>+</button>
+        <button onClick={this.props.decrement}>-</button>
+      </div>
     );
   }
 }
@@ -53,12 +64,12 @@ class Panel extends React.Component {
   }
 
   render(){
-    const {counter, counterAction} = this.props;
+    const {counter, incrementAction, decrementAction} = this.props;
 
     return (
       <div>
         <Show number={counter} />
-        <Btn handleClick={counterAction} />
+        <Btn increment={incrementAction} decrement={decrementAction} />
       </div>
     );
   }
@@ -72,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    counterAction: bindActionCreators(counterAction, dispatch)
+    incrementAction: bindActionCreators(incrementAction, dispatch),
+    decrementAction: bindActionCreators(decrementAction, dispatch)
   }
 }
 
