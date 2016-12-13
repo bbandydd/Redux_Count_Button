@@ -10,8 +10,8 @@ import Btn from '../components/Btn';
 import * as counterAction from '../actions/counterAction';
 
 class Panel extends React.Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
   }
 
   render(){
